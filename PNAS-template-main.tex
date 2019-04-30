@@ -47,7 +47,7 @@ The network science has proven to be an exceptional tool for modeling and analyz
 \begin{figure}%[tbhp]
 \centering
 \includegraphics[width=.8\linewidth]{lower_connectivity.png}
-\caption{An example of basic weighted network. The hole ABDEC is different from the hole FGHI in terms of depths. The former  loop appears when the all edges with weight 8 is present and dies the edge CD enters the filtration in total of depth 6. On the other hand, the loop FGHI appear at the same time as ABDEC but closes the edge FH enters the filtration at weight 6 in total of depth 2}
+\caption{An example of comparisons between lower connectivty regions in a basic weighted network. The hole ABDEC is different from the hole FGHI in terms of depths. The former  loop appears when the all edges with weight 8 is present and dies the edge CD enters the filtration adding up to a total depth of 6. On the other hand, the loop FGHI appear at the same time as ABDEC but closes the edge FH enters the filtration at weight 6 adding up to a total depth of 2}
 \label{fig:connectivty}
 \end{figure}
 
@@ -60,8 +60,7 @@ Several attempts have been made to uncover this problem(cite) which are mostly r
 
 On the other hand, a loop in an abstract topological space can be characterized algebraically by the homology groups of that space. Given that a network can be constructed via combinatorial structures, so called simplices, every network can be given a topology i.e. every simple network is a topological object. Therefore, every network is prone to the tools of algebraic topology. So, just like degree, modularity or eigenvalue centrality, homology can be taught of as a network measure whose meaning is slightly less trivial. Yet, the meaning of a loop in the brain network setting is explained in the previous paragraph for reader to build bridges between two areas.
 
-Persistent homology is a recent technique whose applications gained a lot of attention from different research fields over the past decade. Main idea of persistent homology is that building a nested sequence of subspaces, which is called a filtration, that approximates the original data set. Choosing how to build the filtration is like choosing the lenses that one looks at the data set(cite). Different filtration constructions would yield different results and most of the time filtration can be defined via a real valued function. More formally, let $X$ be the original data set we want to examine and $X_{0}\subset X_{1}\subset...\subset X_{N}=X $ be the filtration. Then, one can compute the homology of each individual spaces and keep track of the homological features that persisted in terms of filtration steps. The main assumption of the persistent homology is that actual signal in the data is going to persist for a long time whereas shorter persistent cycles are likely to be just noise.
-In the brain network case, we indexed the filtration by the ranked edge weights in descending order. This will provide the edges with higher weight entering the filtration earlier and edges with lower edge weight later enabling the loop structures to be more significant before they get killed by a 2-cell, or a 3-clique. So, our construction goes as follows: given that we have a weighted network $N=(V,E,\omega)$, all 0-cells, the set of vertices $V$, are assumed to be having weight $0$, so they are going to be present in the space $X_{0}$. Then, in the first filtration step $X_{1}$, edges with maximum weight $\omega_{max}$ are going to enter the filtration. Then, in $X_{2}$, some edges with weight $\omega<\omega_{max}$ are entering the filtration so that $X_{1}\subset X_{2}$ and so on. Finally, the weight of a 2-cell is determined by minimum of it's coboundary so that at each step we'll have a closed 2-skeleton. Although, there are several packages in Python and MatLab that computes the persistent homology of a filtration, a good review article can be found (cite), we prefer to choose our own. This approach highlights not only the mesosopic regions of reduced connectivity but also how network properties evolve along the filtration.
+Persistent homology is a recent technique whose applications gained a lot of attention from different research fields over the past decade. Main idea of persistent homology is that building a nested sequence of subspaces, which is called a filtration, that approximates the original data set. Choosing how to build the filtration is like choosing the lenses that one looks at the data set(cite). Different filtration constructions would yield different results and most of the time filtration can be defined via a real valued function. More formally, let $X$ be the original data set we want to examine and $X_{0}\subset X_{1}\subset...\subset X_{N}=X $ be the filtration. Then, one can compute the homology of each individual spaces and keep track of the homological features that persisted in terms of filtration steps. The main assumption of the persistent homology is that actual signal in the data is going to persist for a long time whereas shorter persistent cycles are likely to be just noise. This approach highlights not only the mesosopic regions of reduced connectivity but also how network properties evolve along the filtration.
 
 
 
@@ -69,32 +68,46 @@ In the brain network case, we indexed the filtration by the ranked edge weights 
 
 We start with 14 individuals whose structural brain network is obtained via diffusion imaging and functional brain network in resting state is obtained via BOLD signals. For comparison, we also measure the BOLD signals in a modular arithmetic test and turned it into a functional brain network. Then, we averaged the data among 14 individuals and carry on the analysis with only three networks: structural, functional in rest and functional in task. After the computation of 1st homology generators of each networks, we kept the 8 cycles that persisted most in each of them. Figure 1 shows the persistence diagrams corresponding to each instance. The appearance of the lower connectivity regions throughout the filtration is different in each case. Even though we didn't realize a significant difference in terms of persistence durations of these cycles, in the structural network, we noticed all 8 generators born towards the end of the filtration whereas functional brain network in rest shows a little more linear distribution throughout the filtration. Functional brain network in task demonstrates the most linear distribution meaning that the brain turns into a more organized state during a task engaging different levels of lower connectivity regions i.e. several loops born at different weights with pretty much the same depth. On the other hand, in the structural brain network, holes are tend to born and die around the same weight scale. 
 
-\subsection*{Author Affiliations}
+Another interesting observation is that in the structural brain network, we observed a lower mesosopic region of connectivity, a loop, between the left and right hemispheres of the brain. Specifically, there exists a hole whose edges run through the brain region LH/SomMotA and RH/SomMotA consistently whereas other loops we found are going through multiple brain regions. This result might be interpreted as, part of the somatomotor system, region A in particular, is structurally a lower connectivity region given that sensory stimulus can be present any time and brain doesn't shut down this system completely, but it let's it run at the background.
 
-Include department, institution, and complete address, with the ZIP/postal code, for each author. Use lower case letters to match authors with institutions, as shown in the example. Authors with an ORCID ID may supply this information at submission.
+Then, we analyze the results from the homological scaffold network in terms of the classical network measures. We found out that the most in between edges, the highest edge betweenness centrality, are between the brain regions RH/CONTB-RH/DorsAttnA and RH/DorsAttnA-RH/DorsAttnB in both of the functional brain networks-in rest and in task.
 
-\subsection*{Submitting Manuscripts}
 
-All authors must submit their articles at \href{http://www.pnascentral.org/cgi-bin/main.plex}{PNAScentral}. If you are using Overleaf to write your article, you can use the ``Submit to PNAS'' option in the top bar of the editor window. 
+To carry the analysis further, we built a new network derived from the persistent homology calculation for each three types of network. Our algorithm returns a sequence of edges in the actual network making a loop. We grouped together the nodes that these edges touches into the system and brain hemisphere that they belong. In the first network there are 214 brain regions, so nodes, in the second network we constructed, there are 17 on the left hemisphere and 17 on the right hemisphere, total of 34 nodes. This will enable us to classify the systems that are not running in full capacity.
 
-\subsection*{Format}
+\section*{Discussion}
 
-Many authors find it useful to organize their manuscripts with the following order of sections;  Title, Author Affiliation, Keywords, Abstract, Significance Statement, Results, Discussion, Materials and methods, Acknowledgments, and References. Other orders and headings are permitted.
+\section*{Methods and Materials}
 
-\subsection*{Manuscript Length}
+\subsection{Structural and Functional Correlation Dataset} Structural connectivity from 14 individuals obtained via diffusion spectrum imaging(DSI) data and tractography. As a result, 17 systems in each hemisphere further divided into 107 cortical and subcortical regions of interests, making 214 nodes in total.
+The empirical resting-state functional connectivity was also obtained from the same 14 subjects by measuring the corresponding fMRI BOLD signals and divided into 214 brain regions for a legit comparison between function and structure. For the task performance, we chose a modular arithmetic test and acquired the functional connectivity matrices in task ($214\times 214$) for every individual again via the correlation between nodal activities on the basis of blood oxygenation level-dependent functional MRI. 
 
-PNAS generally uses a two-column format averaging 67 characters, including spaces, per line. The maximum length of a Direct Submission research article is six pages and a Direct Submission Plus research article is ten pages including all text, spaces, and the number of characters displaced by figures, tables, and equations.  When submitting tables, figures, and/or equations in addition to text, keep the text for your manuscript under 39,000 characters (including spaces) for Direct Submissions and 72,000 characters (including spaces) for Direct Submission Plus.
+For our analysis, we mainly used the matrices which are averaged along the individuals and carry on the analysis via three networks; structural, functional resting-state and functional task.
+
+\subsection{Persistent Homology as a Lower Connectivity Region Measure}
+As we mentioned earlier, homology is a tool to detect loops and persistent homology is a novel application to the real world datasets. In the brain network case, loops in the network has a special meaning: regions of reduced connectivity.
+
+We started by indexing the filtration $X_{0}\subset X_{1}\subset ...\subset X_{n}=X$ by the ranked edge weights in descending order. This will provide the edges with higher weight entering the filtration earlier and edges with lower edge weight later enabling the loop structures to be more significant before they get killed by a 2-cell, or a 3-clique which is nothing but a triangle. So, our construction goes as follows: given that we have a weighted undirected network $N=(V,E,\omega)$, all 0-cells, the set of vertices $V$, are assumed to be having weight $0$, so they are going to be present in the space $X_{0}$. Then, in the first filtration step $X_{1}$, edges with maximum weight $\omega_{max}$ are going to enter the filtration. Then, in $X_{2}$, some edges with weight $\omega<\omega_{max}$ are entering the filtration in order to have $X_{1}\subset X_{2}$ and so on. Finally, the weight of a 2-cell is determined by minimum of it's coboundary so that at each step we'll have a closed 2-skeleton. Persistent homology computation can be reduced to gaussian elimination and can be done by the algorithm given in the original paper(zomoridan) easily. Although, there are several packages in Python and MatLab that computes the persistent homology of a filtration, a good review article can be found (cite), we prefer to use our own(eztda).
+
+A persistence diagram is a scatter of points above the $x=y$ line that demonstrates the birth and death times of the homology generators in a compact fashion. The birth time $\beta_{c}$ represents the filtration index in which that homological feature has appeared and the death time $\gamma_{c}$ represents the filtration index in which the homological feature disappear giving us a total survival time $\pi_{c}=\gamma_{c}-\beta_{c}$ which we call persistence.  The further up a point is from the diagonal, the more meaningful the information that point represents.
+
+\subsection{Homological Scaffolds of the Reduced Connectivity Regions}
+After computing the homology generators for the three main networks, we apply a persistence threshold keeping the most persistent 8 cycles in each network. A cycle $g_{c}$ is a chain of edges enclosing a loop in the network. So, to see that which brain regions are contributing to the reduced connectivity of the brain systemwise, we grouped together the 214 nodes in the networks according to the systems and hemispheres that they belong resulting in 34 nodes, 17 in each hemisphere and added the homology generators as edges with weight summed persistence value. More formally, let $N=(V,E,\omega)$ be as before, we constructed a new network $N'=(V',E',\omega^{\pi})$ from the homological information such that $V'=\{v_{i_{k}}|,i=1,..,34, k $ is the number of nodes in each system \} and $E'=\bigcup_{c\in C}g_{c}$ where $C$ is the set of 8 cycles found by the persistent homology computation and the weights are given by:
+
+\begin{align*}
+\omega^{\pi}_{e'}=\sum_{g_{c}|e'\in g_{c}}\pi_{g_{c}} \numberthis\\
+\end{align*}
+
+We continued our analysis with these three new networks $N'_{structural}, N'_{rest}$ and $N'_{task}$
+
+
+\acknow{Please include your acknowledgments here, set in a single paragraph. Please do not include any acknowledgments in the Supporting Information, or anywhere else in the manuscript.}
 
 \subsection*{References}
 
-References should be cited in numerical order as they appear in text; this will be done automatically via bibtex, e.g. \cite{belkin2002using} and \cite{berard1994embedding,coifman2005geometric}. All references should be included in the main manuscript file.  
+References should be cited in numerical order as they appear in text; this will be done automatically via bibtex, e.g. \cite{belkin2002using} and \cite{berard1994embedding,coifman2005geometric}. All references should be included in the main manuscript file.
 
-\subsection*{Data Archival}
 
-PNAS must be able to archive the data essential to a published article. Where such archiving is not possible, deposition of data in public databases, such as GenBank, ArrayExpress, Protein Data Bank, Unidata, and others outlined in the Information for Authors, is acceptable.
-
-\subsection*{Language-Editing Services}
-Prior to submission, authors who believe their manuscripts would benefit from professional editing are encouraged to use a language-editing service (see list at www.pnas.org/site/authors/language-editing.xhtml). PNAS does not take responsibility for or endorse these services, and their use has no bearing on acceptance of a manuscript for publication. 
 
 \begin{figure}%[tbhp]
 \centering
@@ -110,24 +123,11 @@ Prior to submission, authors who believe their manuscripts would benefit from pr
 \caption{This caption would be placed at the side of the figure, rather than below it.}
 \end{SCfigure*}
 
-\subsection*{Digital Figures}
 
-Only TIFF, EPS, and high-resolution PDF for Mac or PC are allowed for figures that will appear in the main text, and images must be final size. Authors may submit U3D or PRC files for 3D images; these must be accompanied by 2D representations in TIFF, EPS, or high-resolution PDF format.  Color images must be in RGB (red, green, blue) mode. Include the font files for any text. 
-
-Figures and Tables should be labelled and referenced in the standard way using the \verb|\label{}| and \verb|\ref{}| commands.
-
-Figure \ref{fig:frog} shows an example of how to insert a column-wide figure. To insert a figure wider than one column, please use the \verb|\begin{figure*}...\end{figure*}| environment. Figures wider than one column should be sized to 11.4 cm or 17.8 cm wide. Use \verb|\begin{SCfigure*}...\end{SCfigure*}| for a wide figure with side captions.
 
 \subsection*{Tables}
 In addition to including your tables within this manuscript file, PNAS requires that each table be uploaded to the submission separately as a “Table” file.  Please ensure that each table .tex file contains a preamble, the \verb|\begin{document}| command, and the \verb|\end{document}| command. This is necessary so that the submission system can convert each file to PDF.
 
-\subsection*{Single column equations}
-
-Authors may use 1- or 2-column equations in their article, according to their preference.
-
-To allow an equation to span both columns, use the \verb|\begin{figure*}...\end{figure*}| environment mentioned above for figures.
-
-Note that the use of the \verb|widetext| environment for equations is not recommended, and should not be used. 
 
 \begin{figure*}[bt!]
 \begin{align*}
@@ -153,34 +153,7 @@ Species & CBS & CV & G3 \\
 \addtabletext{nomenclature for the TSs refers to the numbered species in the table.}
 \end{table}
 
-\subsection*{Supporting Information (SI)}
 
-Authors should submit SI as a single separate PDF file, combining all text, figures, tables, movie legends, and SI references.  PNAS will publish SI uncomposed, as the authors have provided it.  Additional details can be found here: \href{http://www.pnas.org/page/authors/journal-policies}{policy on SI}.  For SI formatting instructions click \href{https://www.pnascentral.org/cgi-bin/main.plex?form_type=display_auth_si_instructions}{here}.  The PNAS Overleaf SI template can be found \href{https://www.overleaf.com/latex/templates/pnas-template-for-supplementary-information/wqfsfqwyjtsd}{here}.  Refer to the SI Appendix in the manuscript at an appropriate point in the text. Number supporting figures and tables starting with S1, S2, etc.
-
-Authors who place detailed materials and methods in an SI Appendix must provide sufficient detail in the main text methods to enable a reader to follow the logic of the procedures and results and also must reference the SI methods. If a paper is fundamentally a study of a new method or technique, then the methods must be described completely in the main text.
-
-\subsubsection*{SI Datasets} 
-
-Supply Excel (.xls), RTF, or PDF files. This file type will be published in raw format and will not be edited or composed.
-
-
-\subsubsection*{SI Movies}
-
-Supply Audio Video Interleave (avi), Quicktime (mov), Windows Media (wmv), animated GIF (gif), or MPEG files and submit a brief legend for each movie in a Word or RTF file. All movies should be submitted at the desired reproduction size and length. Movies should be no more than 10 MB in size.
-
-
-\subsubsection*{3D Figures}
-
-Supply a composable U3D or PRC file so that it may be edited and composed. Authors may submit a PDF file but please note it will be published in raw format and will not be edited or composed.
-
-
-\matmethods{Please describe your materials and methods here. This can be more than one paragraph, and may contain subsections and equations as required. Authors should include a statement in the methods section describing how readers will be able to access the data in the paper. 
-
-\subsection*{Subsection for Method}
-Example text for subsection.
-}
-
-\showmatmethods{} % Display the Materials and Methods section
 
 \acknow{Please include your acknowledgments here, set in a single paragraph. Please do not include any acknowledgments in the Supporting Information, or anywhere else in the manuscript.}
 
