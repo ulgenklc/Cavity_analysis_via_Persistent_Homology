@@ -84,7 +84,11 @@ Another interesting observation is that in the structural brain network, we obse
 
 Then, we compare the results from the homological scaffold networks $N'_{Structural}$, $N'_{Rest}$ and $N'_{MOD}$ in terms of the classical network measures. First thing that draw our attention is that no subcortical region was present in both of the functional homological scaffolds i.e. loops doesn't go through the nodes with ids 200-214 which are precisely the subcortical areas  in the brain. However, there is fair amount of subcortical regions contributing to the structural homological scaffold. Furthermore, another interesting similarity between resting state and task state homological scaffolds is that the most in between edges, the highest edge betweenness centrality, are between the brain regions RH/ContB-RH/DorsAttnA and RH/DorsAttnA-RH/DorsAttnB in both of the functional brain networks-in rest and in task. 
 
-We kept going investigating these new networks that has constructed in terms of other network measures. Algebraic connectivity of these 
+We kept going investigating these new networks that has constructed in terms of other network measures. We mainly focused on this new structure in terms of information flow and cost efficiency.
+
+In terms of algebraic connectivity, even though $N'_{Structural}$ and $N'_{Task}$ seemed pretty similar, we couldn't find any reason for this to happen. So, they are not correlated. In terms of transitivity and global efficiency though, $N'_{Rest}$ and $N'_{Task}$ indicated similar behaviour which reinforces the fact that resting state is the underlying structure of the task state. 
+
+
 \begin{table}%[tbhp]
 \centering
 \caption{Comparison of the algebraic connectivity, transitivity and global efficiency of $N'_{Structural}$, $N'_{Rest}$ and $N'_{Task}$}
@@ -102,12 +106,27 @@ Scaffolds & A. Connectivity & Transitivity & Global Efficiency \\
 
 \section*{Discussion}
 
+In this paper, we tried to understand the effects of lower connectivity regions in the whole brain structure and utilized persistent homology to detect the loops inside of the brain network. We compared structural, functional rest and functional task networks. A lower connectivity region can be thought of as a subnetwork in which the information flow between nodes travels along between the strong edges bypassing the edges with low edge weights. If we would like to use a road network analogy, these lower connectivity regions could be interpreted as travelling through the highways where traffic jams are less likely to occur because of the wide roads, high edge weights in brain network case, is more efficient than travelling through inside of the city where the roads are more narrow and traffic lights are more likely to present. So, even though the total distance travelled is higher on the highways, you can get one point to another quicker compared to driving from inside of the city. 
+
+First, we realized that in the structural brain network, the edges with low edge weights are less likely to carry a low connectivity region whereas the loops are more likely to occur between the nodes with strong structural connectivity. This tells us structural connectivity is constructed in a cost efficient way between the strongly connected brain regions. On the other hand, the functional networks appeared to be cost efficient at every weight scale i.e. for functional information to flow, brain constructs wider pathways with respect to its surrounding regardless of the weight scale.
+
+Secondly, we observed a specific low connectivity region between running between the left and right hemispheres of the brain. We can go ahead and interpret this finding as brain needs structurally large fibers between the left and right hemispheres of the brain compared to its surrounding for somatomotor network to communicate faster and more efficiently, given that somatomotor system is responsible from voluntary muscle movement such as walking which employs both left and right sides of the body simultaneously.
+
+The homological scaffold information provided us being able to extract these edges with relatively high weights and aggregate them on a new network by assigning a new edge weight depending on the importance of the edge during the filtration process. A large total weight, persistence, for a link in the persistence scaffold implies that the local structure around that link is very weak when compared with the weight of the link, highlighting the link as a locally strong bridge. 
+We want to highlight the fact that the homology generators contains some topological noise which can be seen from the degree distribution of these networks-occurrence of degree one nodes. However, we can correct this issue by just neglecting these nodes and their connecting edges. Then, we have nice and clean topological summary. The highest edge betweenness in both of the functional networks happened to coincide. The dorsal attention..
+
 \section*{Methods and Materials}
 
 \subsection{Structural and Functional Correlation Dataset} Structural connectivity from 14 individuals obtained via diffusion spectrum imaging(DSI) data and tractography. As a result, 17 systems in each hemisphere further divided into 107 cortical and subcortical regions of interests, making 214 nodes in total.
 The empirical resting-state functional connectivity was also obtained from the same 14 subjects by measuring the corresponding fMRI BOLD signals and divided into 214 brain regions for a legit comparison between function and structure. For the task performance, we chose a modular arithmetic test and acquired the functional connectivity matrices in task ($214\times 214$) for every individual again via the correlation between nodal activities on the basis of blood oxygenation level-dependent functional MRI. 
 
 For our analysis, we mainly used the matrices which are averaged along the individuals and carry on the analysis via three networks; structural, functional resting-state and functional task.
+
+\begin{figure*}%[tbhp]
+\centering
+\includegraphics[width=16cm,height=6cm]{degreedists.png}
+\caption{Degree distributions of the $N'_{Structural}$, $N'_{Rest}$ and $N'_{MOD}$. Since these networks are consisting of loops i.e. they are union of ring graphs, there shouldn't be any nodes with degree one. However, we know that persistent homology calculation returns the homological information with some noise which are the degree 1 nodes in this case. So, it makes sense that most of the edges have degree two and then degree distribution follows a power law pattern.}
+\end{figure*}
 
 \subsection{Persistent Homology as a Lower Connectivity Region Measure}
 As we mentioned earlier, homology is a tool to detect loops and persistent homology is a novel application to the real world datasets. In the brain network case, loops in the network has a special meaning: regions of reduced connectivity.
@@ -125,12 +144,6 @@ After computing the homology generators for the three main networks, we apply a 
 
 We continued our analysis with these three new networks $N'_{structural}, N'_{rest}$ and $N'_{task}$.
 
-\begin{figure*}%[tbhp]
-\centering
-\includegraphics[width=16cm,height=6cm]{degreedists.png}
-\caption{Degree distributions of the $N'_{Structural}$, $N'_{Rest}$ and $N'_{MOD}$. Since these networks are consisting of loops i.e. they are union of ring graphs, there shouldn't be any nodes with degree one. However, we know that persistent homology calculation returns the homological information with some noise which are the degree 1 nodes in this case. So, it makes sense that most of the edges have degree two and then degree distribution follows a power law pattern.}
-\end{figure*}
-
 
 
 \acknow{Please include your acknowledgments here, set in a single paragraph. Please do not include any acknowledgments in the Supporting Information, or anywhere else in the manuscript.}
@@ -139,50 +152,16 @@ We continued our analysis with these three new networks $N'_{structural}, N'_{re
 
 References should be cited in numerical order as they appear in text; this will be done automatically via bibtex, e.g. \cite{belkin2002using} and \cite{berard1994embedding,coifman2005geometric}. All references should be included in the main manuscript file.
 
-
-
-\begin{figure}%[tbhp]
+\begin{figure*}%[tbhp]
 \centering
-\includegraphics[width=.8\linewidth]{frog.eps}
-\caption{Placeholder image of a frog with a long example caption to show justification setting.}
-\label{fig:frog}
-\end{figure}
-
-
-\begin{SCfigure*}[\sidecaptionrelwidth][t]
-\centering
-\includegraphics[width=18cm,height=6cm]{peristencediagrams.png}
-\caption{This caption would be placed at the side of the figure, rather than below it.}
-\end{SCfigure*}
-
-
-\subsection*{Tables}
-In addition to including your tables within this manuscript file, PNAS requires that each table be uploaded to the submission separately as a “Table” file.  Please ensure that each table .tex file contains a preamble, the \verb|\begin{document}| command, and the \verb|\end{document}| command. This is necessary so that the submission system can convert each file to PDF.
-
-
-\begin{figure*}[bt!]
-\begin{align*}
-(x+y)^3&=(x+y)(x+y)^2\\
-       &=(x+y)(x^2+2xy+y^2) \numberthis \label{eqn:example} \\
-       &=x^3+3x^2y+3xy^3+x^3. 
-\end{align*}
+\includegraphics[width=18cm,height=6cm]{scaffolds.png}
+\caption{Visualization of the persistence scaffolds that we constructed. Left: $N'_{Structural}$. Middle: $N'_{Rest}$. Right: $N'_{Task}$  }
 \end{figure*}
 
 
-\begin{table}%[tbhp]
-\centering
-\caption{Comparison of the fitted potential energy surfaces and ab initio benchmark electronic energy calculations}
-\begin{tabular}{lrrr}
-Species & CBS & CV & G3 \\
-\midrule
-1. Acetaldehyde & 0.0 & 0.0 & 0.0 \\
-2. Vinyl alcohol & 9.1 & 9.6 & 13.5 \\
-3. Hydroxyethylidene & 50.8 & 51.2 & 54.0\\
-\bottomrule
-\end{tabular}
 
-\addtabletext{nomenclature for the TSs refers to the numbered species in the table.}
-\end{table}
+
+
 
 \acknow{Please include your acknowledgments here, set in a single paragraph. Please do not include any acknowledgments in the Supporting Information, or anywhere else in the manuscript.}
 
