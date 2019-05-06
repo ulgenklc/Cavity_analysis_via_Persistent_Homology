@@ -11,7 +11,7 @@
 % Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
 \author[a,1]{B. Ülgen Kılıç}
 
-\affil[a]{University at Buffalo, Department of Mathematics}
+\affil[a]{State University of New York, University at Buffalo, Department of Mathematics}
 
 
 % Please give the surname of the lead author for the running footer
@@ -52,6 +52,13 @@ The network science has proven to be an exceptional tool for modeling and analyz
 
 Both the structural and functional network constructions, which generally yield a fully connected and weighted adjacency matrix, from the brain imaging data involve a thresholding of the edge weights leading to lose structural and functional meaning because we do not have a generally accepted criteria for determining a proper threshold. So, instead of trying to come up with a proper threshold for network analysis that may not work for different populations or cognitive conditions, we propose a multiscale framework that models all brain networks generated over every possible threshold and traces the evolution of network changes over different thresholds. This method is going to enable us to capture the information over all weight scales especially the regions of relatively lower edge weights that has been neglected so far due to the ad hoc thresholding methods. So, we are mainly interested in the lower connectivity regions and it has been claimed that these reduced connectivity regions might actually be responsible from resting-state dynamics\cite{weakedges,weakedges1}, cognitive control\cite{weakedges2} and correlated network states\cite{weakedges3}, so overlooking the activity of these regions may end up ignoring the potential research results.
 
+An important goal of network analysis is to infer patterns of
+communication on the basis of network topology, particularly by focusing on the layout of short paths across the network and on the centrality of nodes relative to these paths. Pursuing this approach, numerous studies of brain networks have focused on network elements that enable efficient signal transmission and information flow along short communication paths. Consistently, network analysis in brain networks has suggested that structural and functional hubs play a central role in global brain communication \cite{structure-funct}. The relationship of hub organization and individual differences in cognitive performance \cite{intelll} underscores their importance for promoting neural communication and integration in the healthy brain. Several limitations of current models of network communication
+should be mentioned. First, current large-scale models of communication in the human brain capture only inter-regional projections and do not include
+networks of local circuits. Local processing of neural signals
+is undoubtedly an important aspect of brain communication
+because it involves the transformation and recoding of neural messages at each node of the network. Second, many graph-based analyses of network communication operate on the assumption that network nodes connect along the most efficient (i.e., topologically shortest) paths. However, this assumption implies that such paths are accessible and that path length is the dominant criterion for path selection. Determining whether short paths are indeed privileged in this regard would require more detailed neurophysiological studies that track actual network paths of information flow\cite{hubs}.
+
 
 \begin{figure}%[tbhp]
 \centering
@@ -88,7 +95,7 @@ Another interesting observation is that in the structural brain network, we obse
 
 Then, we compare the results from the homological scaffold networks $N'_{Structural}$, $N'_{Rest}$ and $N'_{MOD}$ in terms of the classical network measures. First thing that draw our attention is that no subcortical region was present in both of the functional homological scaffolds i.e. loops doesn't go through the nodes with ids 200-214 which are precisely the subcortical areas  in the brain. However, there is fair amount of subcortical regions contributing to the structural homological scaffold. Furthermore, another interesting similarity between resting state and task state homological scaffolds is that the most in between edges, the highest edge betweenness centrality, are between the brain regions RH/ContB-RH/DorsAttnA and RH/DorsAttnA-RH/DorsAttnB in both of the functional brain networks-in rest and in task. Then, we further investigated this observation and looked at the degrees of these nodes, shortest paths and compared the betweenness values of these edges. We found out that this part of the network, Dorsal Attention system, is a hub for the functional scaffold incorporating the information all over the brain. Furthermore, we observed betweenness centrality of these two edges are relatively higher in the task state than the resting state.
 
-We kept going investigating these new networks that has constructed in terms of other network measures. We mainly focused on this new structure in terms of information flow and cost efficiency.
+We kept going investigating these new networks that has constructed in terms of other network measures. We mainly focused on this new structure in terms of information flow and cost efficiency (Table 1) .
 
 \begin{figure*}%[tbhp]
 \centering
@@ -120,15 +127,25 @@ In this paper, we tried to understand the effects of lower connectivity regions 
 
 First, we realized that in the structural brain network, the edges with low edge weights are less likely to carry a low connectivity region- no wide roads in the suburbs whereas the loops are more likely to occur between the nodes with strong structural connectivity-highways are built efficiently to travel around downtown. This tells us structural connectivity is constructed in a cost efficient way between the strongly connected brain regions. What this doesn't tell us is that information flow in the low edge weight regions is not efficient simply because loops are not the only mechanisms to built efficiency- a very dense weak edge connections can provide local efficiency still. On the other hand, the functional networks appeared to be cost efficient at every weight scale in terms of this efficiency mechanism i.e. for functional information to flow, brain constructs wider pathways with respect to its surrounding regardless of the weight scale.
 
-Secondly, we observed a specific low connectivity region running between the left and right hemispheres of the brain. We can go ahead and interpret this finding as brain needs structurally large fibers between the left and right hemispheres of the brain compared to its surrounding for somatomotor network to communicate faster and more efficiently, given that somatomotor system is responsible from voluntary muscle movement such as walking which employs both left and right sides of the body simultaneously. 
+Secondly, we observed a specific low connectivity region running between the left and right hemispheres of the brain. We can go ahead and interpret this finding as brain needs structurally large fibers between the left and right hemispheres of the brain compared to its surrounding for somatomotor network to communicate faster and more efficiently, given that somatomotor system is responsible from voluntary muscle movement such as walking which employs both left and right sides of the body simultaneously. This type of bilateralization has shown to be a characteristic of the somatosensory cortex \cite{bilateral}.
 
-The fact that there are no relatively wide pathways going through the functional subcortical areas may tell us that this type of communication is special to cortical regions enabling the distant cortical sites to interact rapidly whereas subcortical regions might not need such type of communication due to its compact nature. This also tells us how the structure and function might influence each other. Physically far brain sites are in need of relatively wider pathways which are mostly present in the upper cortex. 
+The fact that there are no relatively wide pathways going through the functional subcortical areas may tell us that this type of communication is special to cortical regions enabling the distant cortical sites to interact rapidly whereas subcortical regions might not need such type of communication due to its compact nature. This also tells us how the structure and function might influence each other. Physically far brain sites are in need of relatively wider pathways, this special type of construction in particular, which are mostly present in the upper cortex. In fact, ranking of brain regions according to their score on multiple centrality metrics (e.g., degree, betweenness, and closeness centrality) confirmed a central network position for the medial parietal, frontal and insular regions\cite{structure-funct} and findings shown to be consistent across different cortical and subcortical parcellations. Network analysis now suggests
+that the integrative and diverse properties of these regions
+are due to their central embedding within the connection
+topology of the brain, which is in line with the idea that
+functional properties of regions are shaped by their connectional fingerprint.
 
 
-The homological scaffold information provided us being able to extract these edges with relatively high weights and aggregate them on a new network by assigning a new edge weight depending on the importance of the edge during the filtration process. A large total weight, persistence, for a link in the persistence scaffold implies that the local structure around that link is very weak when compared to the weight of the link, highlighting the link as a locally strong bridge. 
-We want to highlight the fact that the homology generators contains some topological noise which can be seen from the degree distribution of these networks-occurrence of degree one nodes. However, we can correct this issue by just neglecting these nodes and their connecting edges. A more detailed and technical handling of this issue can be found \cite{optimalc1,optimalc2} so that we have a nice and clean topological summary. 
+The homological scaffold information provided us being able to extract these edges with relatively high weights and aggregate them on a new network by assigning a new edge weight depending on the importance of the edge during the filtration process(Figure 5). A large total weight, persistence, for a link in the persistence scaffold implies that the local structure around that link is very weak when compared to the weight of the link, highlighting the link as a locally strong bridge. 
+We want to highlight the fact that the homology generators contains some topological noise which can be seen from the degree distribution of these networks-occurrence of degree one nodes (Figure 4). However, we can correct this issue by just neglecting these nodes and their connecting edges. A more detailed and technical handling of this issue can be found \cite{optimalc1,optimalc2} so that we have a nice and clean topological summary. 
 
 The most striking information we stumbled upon in the scaffolds is the coincidence of the two of the most in between edges in both of the functional brain networks. Moreover, the nodes these most in between edges connect are corresponding to the highly connected nodes or hubs of the functional scaffolds. When we investigate further these subnetworks, Dorsal Attention and Control, these systems with low path length and high clustering are mediating interactions between various sensory and motor systems in the macaque cortex \cite{smallworld1,smallworld3}. Also, considering that our task was a modular arithmetic test, our findings reinforces that Dorsal Attention is not only a functional hub but also a central junction for cognitive information flow.
+
+\begin{figure*}%[tbhp]
+\centering
+\includegraphics[width=18cm,height=6cm]{strucscaf.png}
+\caption{Visualization of the persistence scaffolds that we constructed. Left: $N'_{Structural}$. Middle: $N'_{Rest}$. Right: $N'_{Task}$  }
+\end{figure*}
 
 
 
@@ -144,12 +161,6 @@ For our analysis, we mainly used the matrices which are averaged along the indiv
 \subsection{Persistent Homology as a Lower Connectivity Region Measure}
 As we mentioned earlier, brain networks have small world properties. It is shown that persistent homology of random networks generated by different mechanisms such as Erdos-Renyi, preferential attachment and exponential degree distribution have characteristic topological summaries even for different parameter selections \cite{pershomcompnetw}.
 
-
-\begin{figure*}%[tbhp]
-\centering
-\includegraphics[width=18cm,height=6cm]{strucscaf.png}
-\caption{Visualization of the persistence scaffolds that we constructed. Left: $N'_{Structural}$. Middle: $N'_{Rest}$. Right: $N'_{Task}$  }
-\end{figure*}
 
 
 We started by indexing the filtration $X_{0}\subset X_{1}\subset ...\subset X_{n}=X$ by the ranked edge weights in descending order. This will provide the edges with higher weight entering the filtration earlier and edges with lower edge weight later enabling the cavities in the network to be more significant before they get filled(or reinforced) by a 2-cell, or a 3-clique which is nothing but a triangle. We used a clique complex of dimension 2 to only observe loops, namely, our construction goes as follows: given that we have a weighted undirected network $N=(V,E,\omega)$, all 0-cells, the set of vertices $V$, are assumed to be having weight $0$, so they are going to be present in the space $X_{0}$. Then, in the first filtration step $X_{1}$, edges with maximum weight $\omega_{max}$ are going to enter the filtration. Then, in $X_{2}$, some edges with weight $\omega<\omega_{max}$ are entering the filtration in order to have $X_{1}\subset X_{2}$ and so on. Finally, the weight of a 2-cell is determined by minimum of it's coboundary so that at each step we'll have a closed 2-skeleton. Persistent homology computation can be reduced to gaussian elimination and can be done by the algorithm given in the original paper\cite{zomorodian} easily. Although, there are several packages in Python and MatLab that computes the persistent homology of a filtration, a very good review article can be found \cite{roadmap}, we prefer to use our own(eztda) due to time limitations.
@@ -167,14 +178,9 @@ We continued our analysis with these three new networks $N'_{structural}, N'_{re
 
 
 
-\acknow{Please include your acknowledgments here, set in a single paragraph. Please do not include any acknowledgments in the Supporting Information, or anywhere else in the manuscript.}
 
 
-
-
-
-
-\acknow{Johan Nakuci is provided the structural/funtional connectivity dataset and Sarah Muldoon provided the eztda Python package for the homology computation}
+\acknow{Johan Nakuci provided the structural/funtional connectivity dataset and Sarah Muldoon provided the eztda Python package for the homology computation.}
 
 \showacknow{} % Display the acknowledgments section
 
