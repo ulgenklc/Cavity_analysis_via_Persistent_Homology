@@ -31,7 +31,7 @@ The network science has proven to be an exceptional tool for modeling and analyz
 \end{abstract}
 
 \dates{This manuscript was compiled on \today}
-\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
+\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.0000000}}
 
 \begin{document}
 
@@ -52,12 +52,11 @@ The network science has proven to be an exceptional tool for modeling and analyz
 
 Both the structural and functional network constructions, which generally yield a fully connected and weighted adjacency matrix, from the brain imaging data involve a thresholding of the edge weights leading to lose structural and functional meaning because we do not have a generally accepted criteria for determining a proper threshold. So, instead of trying to come up with a proper threshold for network analysis that may not work for different populations or cognitive conditions, we propose a multiscale framework that models all brain networks generated over every possible threshold and traces the evolution of network changes over different thresholds. This method is going to enable us to capture the information over all weight scales especially the regions of relatively lower edge weights that has been neglected so far due to the ad hoc thresholding methods. So, we are mainly interested in the lower connectivity regions and it has been claimed that these reduced connectivity regions might actually be responsible from resting-state dynamics\cite{weakedges,weakedges1}, cognitive control\cite{weakedges2} and correlated network states\cite{weakedges3}, so overlooking the activity of these regions may end up ignoring the potential research results.
 
-An important goal of network analysis is to infer patterns of
-communication on the basis of network topology, particularly by focusing on the layout of short paths across the network and on the centrality of nodes relative to these paths. Pursuing this approach, numerous studies of brain networks have focused on network elements that enable efficient signal transmission and information flow along short communication paths. Consistently, network analysis in brain networks has suggested that structural and functional hubs play a central role in global brain communication \cite{structure-funct}. The relationship of hub organization and individual differences in cognitive performance \cite{intelll} underscores their importance for promoting neural communication and integration in the healthy brain. Several limitations of current models of network communication
+Another important goal of network analysis is to infer patterns of communication on the basis of network topology, particularly by focusing on the layout of short paths across the network and on the centrality of nodes relative to these paths. Pursuing this approach, numerous studies of brain networks have focused on network elements that enable efficient signal transmission and information flow along short communication paths. Consistently, network analysis in brain networks has suggested that structural and functional hubs play a central role in global brain communication \cite{structure-funct}. The relationship of hub organization and individual differences in cognitive performance \cite{intelll} underscores their importance for promoting neural communication and integration in the healthy brain. Several limitations of current models of network communication
 should be mentioned. First, current large-scale models of communication in the human brain capture only inter-regional projections and do not include
 networks of local circuits. Local processing of neural signals
 is undoubtedly an important aspect of brain communication
-because it involves the transformation and recoding of neural messages at each node of the network. Second, many graph-based analyses of network communication operate on the assumption that network nodes connect along the most efficient (i.e., topologically shortest) paths. However, this assumption implies that such paths are accessible and that path length is the dominant criterion for path selection. Determining whether short paths are indeed privileged in this regard would require more detailed neurophysiological studies that track actual network paths of information flow\cite{hubs}.
+because it involves the transformation and recoding of neural messages at each node of the network. Second, many graph-based analyses of network communication operate on the assumption that network nodes connect along the most efficient (i.e., topologically shortest) paths. However, this assumption implies that such paths are accessible and that path length is the dominant criterion for path selection. Determining whether short paths are indeed privileged in this regard would require more detailed neurophysiological studies that track actual network paths of information flow\cite{hubs}. We are aiming that the proposed framework is going to address this issue from a different perspective and provide an alternative communication mechanism.
 
 
 \begin{figure}%[tbhp]
@@ -110,15 +109,18 @@ In terms of algebraic connectivity, even though $N'_{Structural}$ and $N'_{Task}
 \centering
 \caption{Comparison of the algebraic connectivity, transitivity and global efficiency of $N'_{Structural}$, $N'_{Rest}$ and $N'_{Task}$}
 \begin{tabular}{lrrr}
-Scaffolds & A. Connectivity & Transitivity & Global Efficiency \\
+Scaffolds & $N'_{Structural}$ &  $N'_{Rest}$ & $N'_{Task}$  \\
 \midrule
-1. $N'_{Structural}$ & 0.02353226686 & 0.0769230769 & 0.2331699031 \\
-2. $N'_{Rest}$ & 0.09224809273 & 0.1818181818 & 0.4360507246 \\
-3. $N'_{Task}$ & 0.02378270622 & 0.1942446043 & 0.4063218390\\
+1. Algebraic Con. & 0.0235322 & 0.0922480 & 0.0237827 \\
+2. Transitivity & 0.0769230  & 0.1818181 & 0.4063218 \\
+3. Global Efficiency & 0.2331699 & 0.1942446 & 0.4360507\\
+4. Avrg. Inf. Flow Centr. & 0.176492 &0.238463 &0.279563\\
+5. Avrg. Btwn. Centr. & 0.359374 & 0.410475 &0.407563\\
+6. Avrg. Close. Centr. & 0.279450 & 0.284855 & 0.250855\\  
 \bottomrule
 \end{tabular}
 
-\addtabletext{Comparisons of the network measures based on the information flow}
+\addtabletext{Comparisons of the network measures based on the information flow. Rather than averaged values for centralities, rankings of the nodes or subnetworks with respect to these measures would be more useful which is done but not present in the paper. According to these measures, hubs in the scaffolds belong to Dorsal Attention, Cognitive Control and Default Mode Networks which is in correlation with the previous results.}
 \end{table}
 
 \section*{Discussion}
@@ -183,6 +185,8 @@ We continued our analysis with these three new networks $N'_{structural}, N'_{re
 \acknow{Johan Nakuci provided the structural/funtional connectivity dataset and Sarah Muldoon provided the eztda Python package for the homology computation.}
 
 \showacknow{} % Display the acknowledgments section
+
+\section*{References}
 
 % Bibliography
 \bibliography{pnas-sample}
